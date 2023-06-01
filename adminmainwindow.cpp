@@ -94,7 +94,7 @@ void AdminMainWindow::selectDate() {
 }
 
 void AdminMainWindow::on_newAction_triggered() {
-    newAppointmentDialog newDialog;
+    NewAppointmentDialog newDialog;
     newDialog.open();
     if(newDialog.exec() == QDialog::Accepted) {
         selectDate();

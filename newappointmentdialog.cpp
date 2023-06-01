@@ -5,9 +5,9 @@
 #include "databasetool.h"
 #include "appointment.h"
 
-newAppointmentDialog::newAppointmentDialog(QWidget *parent) :
+NewAppointmentDialog::NewAppointmentDialog(QWidget *parent) :
     QDialog(parent),
-    ui(new Ui::newAppointmentDialog)
+    ui(new Ui::NewAppointmentDialog)
 {
     ui->setupUi(this);
 
@@ -17,12 +17,12 @@ newAppointmentDialog::newAppointmentDialog(QWidget *parent) :
     ui->endTimeEdit->setDateTime(QDateTime::currentDateTime().addSecs(3600));
 }
 
-newAppointmentDialog::~newAppointmentDialog()
+NewAppointmentDialog::~NewAppointmentDialog()
 {
     delete ui;
 }
 
-void newAppointmentDialog::on_saveButton_clicked()
+void NewAppointmentDialog::on_saveButton_clicked()
 {
     // 未输入人数上限
     if(ui->numLimitEdit->text() == "") {
@@ -43,7 +43,7 @@ void newAppointmentDialog::on_saveButton_clicked()
     accept();
 }
 
-void newAppointmentDialog::on_closeButton_clicked()
+void NewAppointmentDialog::on_closeButton_clicked()
 {
     reject();
 }

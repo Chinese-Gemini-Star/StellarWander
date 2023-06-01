@@ -5,16 +5,16 @@
 #include <QDate>
 
 namespace Ui {
-class newAppointmentDialog;
+class NewAppointmentDialog;
 }
 
-class newAppointmentDialog : public QDialog
+class NewAppointmentDialog : public QDialog
 {
     Q_OBJECT
 
 public:
-    explicit newAppointmentDialog(QWidget *parent = nullptr);
-    ~newAppointmentDialog();
+    explicit NewAppointmentDialog(QWidget *parent = nullptr);
+    ~NewAppointmentDialog();
 
 private slots:
     void on_saveButton_clicked();
@@ -22,7 +22,7 @@ private slots:
     void on_closeButton_clicked();
 
 private:
-    Ui::newAppointmentDialog *ui;
+    Ui::NewAppointmentDialog *ui;
 };
 
 #endif // NEWAPPOINTMENTDIALOG_H
