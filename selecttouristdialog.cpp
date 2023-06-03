@@ -57,14 +57,14 @@ void SelectTouristDialog::on_selectButton_clicked()
     if(res == QMessageBox::Yes) {
         qDebug() << "用户确认了选择操作" << Qt::endl;
 
-        if(appointment.getNumLimit() < appointment.getNum() + ui->touristsTableView->selectionModel()->selectedIndexes().size()) {
+        if(appointment.getNumLimit() < appointment.getNum() + ui->touristsTableView->selectionModel()->selectedRows().size()) {
             QMessageBox::warning(nullptr,"不可预约","当前时间段剩余可预约人数不足,请预约其他时间或减少预约人数");
             return;
         }
 
         bool hasSelf = false;
 
-        for(auto i : ui->touristsTableView->selectionModel()->selectedIndexes()) {
+        for(auto i : ui->touristsTableView->selectionModel()->selectedRows()) {
             int row = i.row();
 
             Tourist tourist(ui->touristsTableView->model()->index(row,0).data().toString(),ui->touristsTableView->model()->index(row,1).data().toString(),ui->touristsTableView->model()->index(row,2).data().toString());

@@ -111,7 +111,7 @@ void AdminMainWindow::on_deleteAction_triggered() {
     QMessageBox::StandardButton res = QMessageBox::question(this, "删除确认", "您确定要删除吗?",QMessageBox::Yes | QMessageBox::No);
     if(res == QMessageBox::Yes) {
         qDebug() << "管理员确认了删除操作" << Qt::endl;
-        for(auto i : ui->appointmentInfo->selectionModel()->selectedIndexes()) {
+        for(auto i : ui->appointmentInfo->selectionModel()->selectedRows()) {
             int row = i.row();
 
             // 已有人预约
