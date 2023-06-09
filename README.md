@@ -28,7 +28,17 @@ A simple local application that provides reservation service for scenic spots. T
 
 ## 类的设计
 
-![img](https://img2023.cnblogs.com/blog/2137098/202305/2137098-20230531114353199-1001074983.jpg)
+完整:
+
+![img](https://img2023.cnblogs.com/blog/2137098/202306/2137098-20230608125943363-1082345540.png)
+
+去掉Qt内置类:
+
+![img](https://img2023.cnblogs.com/blog/2137098/202306/2137098-20230608130029925-568368374.png)
+
+去掉对Qt内置类的继承:
+
+![img](https://img2023.cnblogs.com/blog/2137098/202306/2137098-20230608142050094-829420458.png)
 
 ## 心得与体会
 
