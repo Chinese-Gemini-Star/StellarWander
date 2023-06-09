@@ -56,16 +56,19 @@ void SelectTouristDialog::on_selectButton_clicked()
     QMessageBox::StandardButton res = QMessageBox::question(this, "预约确认", "您确定要为选中的这些用户预约吗?\n非代表用户自身的游客(即非表格第一项)在当前用户代预约后,不可查看与删除其预约信息,必须由本人才可操作",QMessageBox::Yes | QMessageBox::No);
     if(res == QMessageBox::Yes) {
         qDebug() << "用户确认了选择操作" << Qt::endl;
+        QSet<int> rows;
+        for(auto i : ui->touristsTableView->selectionModel()->selectedIndexes()) {
+            rows.insert(i.row());
+        }
 
-        if(appointment.getNumLimit() < appointment.getNum() + ui->touristsTableView->selectionModel()->selectedRows().size()) {
+        if(appointment.getNumLimit() < appointment.getNum() + rows.size()) {
             QMessageBox::warning(nullptr,"不可预约","当前时间段剩余可预约人数不足,请预约其他时间或减少预约人数");
             return;
         }
 
         bool hasSelf = false;
 
-        for(auto i : ui->touristsTableView->selectionModel()->selectedRows()) {
-            int row = i.row();
+        for(auto row : rows) {
 
             Tourist tourist(ui->touristsTableView->model()->index(row,0).data().toString(),ui->touristsTableView->model()->index(row,1).data().toString(),ui->touristsTableView->model()->index(row,2).data().toString());
 

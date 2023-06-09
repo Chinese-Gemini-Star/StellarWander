@@ -103,6 +103,11 @@ void RegisterDialog::on_registerButton_clicked()
         }
         DatabaseTool::setTourist(tourist);
     } else {
+        if(DatabaseTool::checkTouristName(tourist)) {
+            qDebug() << "游客姓名不一致" << Qt::endl;
+            QMessageBox::warning(nullptr, "警告","游客姓名输入错误");
+            return;
+        }
         qDebug() << "该游客已存在在数据库中,无需加入" << Qt::endl;
     }
 

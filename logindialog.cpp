@@ -38,12 +38,16 @@ void LoginDialog::on_loginButton_clicked()
     }
 
     // 用户名或密码错误
-    if(DatabaseTool::getPasswordByUserName(ui->userNameEdit->text()) != ui->passwordEditor->text() && DatabaseTool::getPasswordByPhone(ui->userNameEdit->text()) != ui->passwordEditor->text()) {
-        QMessageBox::warning(nullptr, "错误", "用户名或密码错误");
-        return;
+    if(DatabaseTool::getPasswordByUserName(ui->userNameEdit->text()) != ui->passwordEditor->text()) {
+        if(DatabaseTool::getPasswordByPhone(ui->userNameEdit->text()) != ui->passwordEditor->text()) {
+            QMessageBox::warning(nullptr, "错误", "用户名或密码错误");
+            return;
+        } else {
+            user = User(DatabaseTool::getUserNameByPhone(ui->userNameEdit->text()),ui->passwordEditor->text());
+        }
+    } else {
+        user = User(ui->userNameEdit->text(),ui->passwordEditor->text());
     }
-
-    user = User(ui->userNameEdit->text(),ui->passwordEditor->text());
     accept();
 }
 

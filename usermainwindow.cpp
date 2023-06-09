@@ -167,8 +167,15 @@ void UserMainWindow::on_deleteButton_clicked()
     QMessageBox::StandardButton res = QMessageBox::question(this, "删除确认", "您确定要删除吗?",QMessageBox::Yes | QMessageBox::No);
     if(res == QMessageBox::Yes) {
         qDebug() << "用户确认了删除操作" << Qt::endl;
+        QSet<int> rows;
         for(auto i : touristsTableView->selectionModel()->selectedIndexes()) {
             int row = i.row();
+
+            if(rows.find(row) != rows.end()) {
+                continue;
+            }
+
+            rows.insert(row);
 
             // 企图删除自身对应的游客
             if(row == 0) {

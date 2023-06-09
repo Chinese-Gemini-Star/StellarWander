@@ -37,6 +37,13 @@ public:
     static QString getPasswordByPhone(const QString &phone);
 
     /**
+     * @brief 从数据库中用电话查找用户名
+     * @param 电话
+     * @return 用户名
+     */
+    static QString getUserNameByPhone(const QString &phone);
+
+    /**
      * @brief 确认用户名是否重复
      * @param 用户名
      * @return 是否重复
@@ -55,6 +62,14 @@ public:
      * @return 是否已在数据库中
      */
     static bool isTouristExist(const Tourist &tourist);
+
+    /**
+     * @brief 检查该游客姓名是否有两个版本
+     * @param tourist
+     * @return
+     */
+    static bool checkTouristName(const Tourist &tourist);
+
 
     /**
      * @brief 确认电话是否重复

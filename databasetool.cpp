@@ -34,6 +34,21 @@ QString DatabaseTool::getPasswordByPhone(const QString &phone) {
     return password;
 }
 
+QString DatabaseTool::getUserNameByPhone(const QString &phone) {
+    QSqlQuery query;
+    query.prepare("SELECT userName FROM users WHERE userName IN (SELECT userName FROM user_tourist_relations WHERE touristPhone = ? AND isSelf = 1)");
+    query.bindValue(0,phone);
+    query.exec();
+    QString userName = "";
+    if(query.next()) {
+        qDebug() << "通过手机号找到指定用户" << Qt::endl;
+        userName = query.value(0).toString();
+    } else {
+        qDebug() << "未通过手机号找到指定用户" << Qt::endl;
+    }
+    return userName;
+}
+
 bool DatabaseTool::checkUserName(const User &user) {
     QSqlQuery query;
     query.prepare("SELECT userName FROM users WHERE userName=?");
@@ -66,6 +81,20 @@ bool DatabaseTool::isTouristExist(const Tourist &tourist) {
     } else {
         return false;
     }
+}
+
+bool DatabaseTool::checkTouristName(const Tourist &tourist) {
+    QSqlQuery query;
+    query.prepare("SELECT name FROM tourists WHERE cardId=? AND phone=?");
+    query.bindValue(0,tourist.getCardId());
+    query.bindValue(1,tourist.getPhone());
+    query.exec();
+    if(query.next()) {
+        if(query.value(0) != tourist.getName()) {
+            return true;
+        }
+    }
+    return false;
 }
 
 bool DatabaseTool::checkPhone(const Tourist &tourist) {

@@ -44,6 +44,11 @@ void AddTouristDialog::on_okButton_clicked()
     Tourist tourist(ui->nameEdit->text(), ui->phoneEdit->text(), ui->idEdit->text());
 
     if(DatabaseTool::isTouristExist(tourist)) {
+        if(DatabaseTool::checkTouristName(tourist)) {
+            qDebug() << "游客姓名不一致" << Qt::endl;
+            QMessageBox::warning(nullptr, "警告","游客姓名输入错误");
+            return;
+        }
         if(DatabaseTool::isRelated(user,tourist)) {
             qDebug() << "重复添加同一游客" << Qt::endl;
             QMessageBox::warning(nullptr,"警告","该游客已被绑定");

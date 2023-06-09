@@ -24,10 +24,22 @@ NewAppointmentDialog::~NewAppointmentDialog()
 
 void NewAppointmentDialog::on_saveButton_clicked()
 {
+    if(ui->startTimeEdit->dateTime() >= ui->endTimeEdit->dateTime()) {
+        qDebug() << "管理员指定的时间范围不合法" << Qt::endl;
+        QMessageBox::warning(nullptr, "警告", "请输入正确的时间范围");
+        return;
+    }
+
+    if(ui->startTimeEdit->dateTime().addSecs(3600 / 2) > ui->endTimeEdit->dateTime()) {
+        qDebug() << "管理给定的时间范围太小" << Qt::endl;
+        QMessageBox::warning(nullptr, "警告", "可预约的时间段至少持续30分钟");
+        return;
+    }
+
     // 未输入人数上限
-    if(ui->numLimitEdit->text() == "") {
-        qDebug() << "管理员未输入人数上限" << Qt::endl;
-        QMessageBox::warning(nullptr,"警告","请输入人数上限");
+    if(ui->numLimitEdit->text().toInt() <= 0) {
+        qDebug() << "管理员未输入正确的人数上限" << Qt::endl;
+        QMessageBox::warning(nullptr,"警告","请输入正确的人数上限");
         return;
     }
 

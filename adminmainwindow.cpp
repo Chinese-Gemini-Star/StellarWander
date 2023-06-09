@@ -111,9 +111,18 @@ void AdminMainWindow::on_deleteAction_triggered() {
     QMessageBox::StandardButton res = QMessageBox::question(this, "删除确认", "您确定要删除吗?",QMessageBox::Yes | QMessageBox::No);
     if(res == QMessageBox::Yes) {
         qDebug() << "管理员确认了删除操作" << Qt::endl;
-        for(auto i : ui->appointmentInfo->selectionModel()->selectedRows()) {
+        QSet<int> rows;
+        for(auto i : ui->appointmentInfo->selectionModel()->selectedIndexes()) {
             int row = i.row();
 
+            // 防止重复删除行
+            if(rows.find(row) != rows.end()) {
+                continue;
+            }
+
+            rows.insert(row);
+
+            qDebug() << row << Qt::endl;
             // 已有人预约
             if(appointmentInfo.index(row,4).data().toInt()) {
                 qDebug() << "管理员试图删除已有人预约的时间段" << Qt::endl;
@@ -170,10 +179,21 @@ void AdminMainWindow::on_selectAction_triggered() {
 
 
 void AdminMainWindow::on_detailAction_triggered() {
-    // 未选中元素,不支持删除
+    // 未选中元素,不支持查询
     if(!ui->appointmentInfo->currentIndex().isValid()) {
         QMessageBox::warning(nullptr,"警告","当前未选中任何元素");
-        qDebug() << "管理员未选中行而执行删除" << Qt::endl;
+        qDebug() << "管理员未选中行而执行查询" << Qt::endl;
+        return;
+    }
+
+    QSet<int> rows;
+    for(auto i : ui->appointmentInfo->selectionModel()->selectedIndexes()) {
+        rows.insert(i.row());
+    }
+
+    if(rows.size() != 1) {
+        QMessageBox::warning(nullptr,"警告","不可对多行进行查询,请只选中一行的元素.");
+        qDebug() << "管理员对多行进行查询" << Qt::endl;
         return;
     }
 
